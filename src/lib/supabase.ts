@@ -1,3 +1,5 @@
+import { createClient } from '@insforge/sdk';
+
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -7,6 +9,11 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const insforgeBaseUrl = supabaseUrl || '';
 export const insforgeApiKey = supabaseAnonKey || '';
+
+export const insforge = createClient({
+  baseUrl: supabaseUrl || '',
+  anonKey: supabaseAnonKey || '',
+});
 
 // Type definitions for Supabase tables
 export interface DbCourse {
