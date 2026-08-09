@@ -1,0 +1,61 @@
+
+  Auth
+    OAuth Providers:   github, google
+    Email Verification: Yes
+    Password Policy:
+      Min Length: 6, requireLowercase: false, requireNumber: false, requireSpecialChar: false, requireUppercase: false
+    Verify Email Method: code
+    Reset Password Method: code
+
+  Database
+    Size: 9.85 MB
+┌─────────────────────┬─────────┐
+│ Table               │ Records │
+├─────────────────────┼─────────┤
+│ about_data          │ 1       │
+├─────────────────────┼─────────┤
+│ contact_info        │ 1       │
+├─────────────────────┼─────────┤
+│ courses             │ 3       │
+├─────────────────────┼─────────┤
+│ features            │ 4       │
+├─────────────────────┼─────────┤
+│ financial_solutions │ 4       │
+├─────────────────────┼─────────┤
+│ footer_config       │ 1       │
+├─────────────────────┼─────────┤
+│ testimonials        │ 3       │
+└─────────────────────┴─────────┘
+
+  Storage
+    Size: 0.0 KB
+┌──────────────┬────────┬─────────┐
+│ Bucket       │ Public │ Objects │
+├──────────────┼────────┼─────────┤
+│ courses      │ Yes    │ 2       │
+├──────────────┼────────┼─────────┤
+│ testimonials │ Yes    │ 0       │
+└──────────────┴────────┴─────────┘
+
+  Functions
+    No functions deployed.
+
+  AI Models
+┌───────────────────────────────────┬─────────────┬─────────────┐
+│ Model                             │ Input       │ Output      │
+├───────────────────────────────────┼─────────────┼─────────────┤
+│ deepseek/deepseek-v3.2            │ text, image │ text        │
+├───────────────────────────────────┼─────────────┼─────────────┤
+│ minimax/minimax-m2.1              │ text, image │ text        │
+├───────────────────────────────────┼─────────────┼─────────────┤
+│ x-ai/grok-4.1-fast                │ text, image │ text        │
+├───────────────────────────────────┼─────────────┼─────────────┤
+│ anthropic/claude-sonnet-4.5       │ text, image │ text        │
+├───────────────────────────────────┼─────────────┼─────────────┤
+│ openai/gpt-4o-mini                │ text, image │ text        │
+├───────────────────────────────────┼─────────────┼─────────────┤
+│ google/gemini-3-pro-image-preview │ text, image │ text, image │
+└───────────────────────────────────┴─────────────┴─────────────┘
+
+  Version: 1.0.0
+

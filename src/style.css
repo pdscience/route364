@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0A0A0B 0%, #1a1a2e 50%, #0A0A0B 100%);
+    color: #F4F4F5;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #app {
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .clay {
+    background: linear-gradient(145deg, rgba(40, 40, 55, 0.9), rgba(25, 25, 35, 0.85));
+    border-radius: 24px;
+    box-shadow: 
+      8px 8px 16px rgba(0, 0, 0, 0.4),
+      -8px -8px 16px rgba(255, 255, 255, 0.05),
+      inset 2px 2px 4px rgba(255, 255, 255, 0.1),
+      inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .clay-light {
+    background: linear-gradient(145deg, rgba(60, 60, 80, 0.85), rgba(40, 40, 60, 0.8));
+    border-radius: 20px;
+    box-shadow: 
+      6px 6px 12px rgba(0, 0, 0, 0.35),
+      -6px -6px 12px rgba(255, 255, 255, 0.08),
+      inset 1px 1px 3px rgba(255, 255, 255, 0.12),
+      inset -1px -1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .clay-card {
+    background: linear-gradient(145deg, rgba(35, 35, 50, 0.9), rgba(20, 20, 30, 0.85));
+    border-radius: 28px;
+    box-shadow: 
+      12px 12px 24px rgba(0, 0, 0, 0.45),
+      -10px -10px 20px rgba(255, 255, 255, 0.04),
+      inset 3px 3px 6px rgba(255, 255, 255, 0.08),
+      inset -3px -3px 6px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .glass {
+    background: rgba(30, 30, 40, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-light {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+  }
+
+  .clay-btn {
+    background: linear-gradient(145deg, rgba(250, 204, 21, 0.25), rgba(234, 179, 8, 0.2));
+    border-radius: 16px;
+    box-shadow: 
+      6px 6px 12px rgba(0, 0, 0, 0.35),
+      -4px -4px 10px rgba(255, 255, 255, 0.08),
+      inset 2px 2px 4px rgba(250, 204, 21, 0.2),
+      inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(250, 204, 21, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .clay-btn:hover {
+    background: linear-gradient(145deg, rgba(250, 204, 21, 0.35), rgba(234, 179, 8, 0.3));
+    box-shadow: 
+      8px 8px 16px rgba(0, 0, 0, 0.4),
+      -6px -6px 14px rgba(255, 255, 255, 0.1),
+      inset 3px 3px 6px rgba(250, 204, 21, 0.25),
+      inset -3px -3px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .clay-btn:active {
+    transform: translateY(1px);
+    box-shadow: 
+      3px 3px 6px rgba(0, 0, 0, 0.35),
+      -2px -2px 5px rgba(255, 255, 255, 0.05),
+      inset 1px 1px 2px rgba(250, 204, 21, 0.15),
+      inset -1px -1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  .clay-nav {
+    background: linear-gradient(180deg, rgba(30, 30, 45, 0.95) 0%, rgba(25, 25, 40, 0.9) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 -8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .clay-btn-danger {
+    background: linear-gradient(145deg, rgba(225, 29, 72, 0.25), rgba(180, 20, 50, 0.2));
+    border-radius: 16px;
+    box-shadow: 
+      6px 6px 12px rgba(0, 0, 0, 0.35),
+      -4px -4px 10px rgba(255, 255, 255, 0.06),
+      inset 2px 2px 4px rgba(225, 29, 72, 0.2),
+      inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(225, 29, 72, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .clay-inner-shadow {
+    box-shadow: 
+      inset 3px 3px 6px rgba(0, 0, 0, 0.3),
+      inset -2px -2px 4px rgba(255, 255, 255, 0.04);
+  }
+
+  .tactical-grid {
+    background-image: 
+      linear-gradient(to right, rgba(250, 204, 21, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(250, 204, 21, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .card-glow:hover {
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.2);
+  }
+
+  .clay-input {
+    background: linear-gradient(145deg, rgba(30, 30, 45, 0.9), rgba(20, 20, 30, 0.85));
+    border-radius: 16px;
+    box-shadow: 
+      inset 4px 4px 8px rgba(0, 0, 0, 0.35),
+      inset -3px -3px 6px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .clay-input:focus {
+    box-shadow: 
+      inset 4px 4px 8px rgba(0, 0, 0, 0.35),
+      inset -3px -3px 6px rgba(255, 255, 255, 0.05),
+      0 0 0 2px rgba(250, 204, 21, 0.3);
+    border-color: rgba(250, 204, 21, 0.5);
+  }
+
+  .clay-stat {
+    background: linear-gradient(145deg, rgba(45, 45, 65, 0.85), rgba(30, 30, 45, 0.8));
+    border-radius: 20px;
+    box-shadow: 
+      8px 8px 16px rgba(0, 0, 0, 0.4),
+      -6px -6px 12px rgba(255, 255, 255, 0.05),
+      inset 2px 2px 4px rgba(255, 255, 255, 0.08),
+      inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.3s ease;
+  }
+
+  .clay-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      12px 12px 24px rgba(0, 0, 0, 0.5),
+      -8px -8px 16px rgba(255, 255, 255, 0.06),
+      inset 3px 3px 6px rgba(255, 255, 255, 0.1),
+      inset -3px -3px 6px rgba(0, 0, 0, 0.25);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(250, 204, 21, 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(250, 204, 21, 0.5);
+  }
+}
