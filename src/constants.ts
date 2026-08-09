@@ -88,6 +88,3 @@ export const TESTIMONIALS: Testimonial[] = [
     avatarUrl: "https://i.pravatar.cc/150?u=marcos",
   },
 ];
-
-export const ADMIN_EMAIL = 'admin@route364.com';
-export const ADMIN_PASSWORD = 'admin123';
