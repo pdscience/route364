@@ -1,5 +1,6 @@
 import { insforgeBaseUrl, insforgeApiKey, type DbCourse, type DbTestimonial, type DbFeature, type DbAboutData, type DbContactInfo, type DbFooterConfig, type DbFinancialSolution } from '../lib/supabase';
 import type { Course, Testimonial, Feature, AboutData, ContactInfo, FooterConfig, FinancialSolution } from '../types';
+import { useAuth } from '../composables/useAuth';
 
 const apiUrl = insforgeBaseUrl;
 const apiKey = insforgeApiKey;
@@ -10,10 +11,34 @@ const authHeaders = {
   'Content-Type': 'application/json'
 };
 
-async function fetchApi(endpoint: string, options: RequestInit = {}) {
+function writeHeaders() {
+  const token = useAuth().getAccessToken();
+  if (!token) {
+    throw new Error('Sessão expirada. Faça login novamente.');
+  }
+  return {
+    'Authorization': `Bearer ${token}`,
+    'apikey': apiKey,
+    'Content-Type': 'application/json'
+  };
+}
+
+function writeUploadHeaders() {
+  const token = useAuth().getAccessToken();
+  if (!token) {
+    throw new Error('Sessão expirada. Faça login novamente.');
+  }
+  return {
+    'Authorization': `Bearer ${token}`,
+    'apikey': apiKey
+  };
+}
+
+async function fetchApi(endpoint: string, options: RequestInit = {}, authenticated = false) {
+  const headers = authenticated ? writeHeaders() : authHeaders;
   const response = await fetch(`${apiUrl}${endpoint}`, {
     ...options,
-    headers: { ...authHeaders, ...options.headers }
+    headers: { ...headers, ...options.headers }
   });
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: response.statusText }));
@@ -109,10 +134,7 @@ async function uploadTestimonialAvatar(file: File): Promise<string> {
   
   const response = await fetch(`${apiUrl}/api/storage/buckets/testimonials/objects`, {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'apikey': apiKey
-    },
+    headers: writeUploadHeaders(),
     body: formData
   });
   
@@ -131,10 +153,7 @@ async function uploadCourseImage(file: File): Promise<string> {
   
   const response = await fetch(`${apiUrl}/api/storage/buckets/courses/objects`, {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'apikey': apiKey
-    },
+    headers: writeUploadHeaders(),
     body: formData
   });
   
@@ -179,7 +198,7 @@ export const contentApi = {
         modulos_detalhes: course.modulosDetalhes,
         requisitos: course.requisitos,
       }])
-    });
+    }, true);
     return mapDbToCourse(result);
   },
 
@@ -201,12 +220,12 @@ export const contentApi = {
         modulos_detalhes: course.modulosDetalhes,
         requisitos: course.requisitos,
       })
-    });
+    }, true);
     return mapDbToCourse(result);
   },
 
   async deleteCourse(id: number): Promise<void> {
-    await fetchApi(`/api/database/records/courses?id=eq.${id}`, { method: 'DELETE' });
+    await fetchApi(`/api/database/records/courses?id=eq.${id}`, { method: 'DELETE' }, true);
   },
 
   async getTestimonials(): Promise<Testimonial[]> {
@@ -224,7 +243,7 @@ export const contentApi = {
         content: testimonial.content,
         avatar_url: testimonial.avatarUrl,
       }])
-    });
+    }, true);
     return mapDbToTestimonial(result);
   },
 
@@ -238,12 +257,12 @@ export const contentApi = {
         content: testimonial.content,
         avatar_url: testimonial.avatarUrl,
       })
-    });
+    }, true);
     return mapDbToTestimonial(result);
   },
 
   async deleteTestimonial(id: number): Promise<void> {
-    await fetchApi(`/api/database/records/testimonials?id=eq.${id}`, { method: 'DELETE' });
+    await fetchApi(`/api/database/records/testimonials?id=eq.${id}`, { method: 'DELETE' }, true);
   },
 
   async getFeatures(): Promise<Feature[]> {
@@ -261,7 +280,7 @@ export const contentApi = {
         icon: feature.icon,
         color: feature.color,
       })
-    });
+    }, true);
     return mapDbToFeature(result);
   },
 
@@ -280,7 +299,7 @@ export const contentApi = {
         title_suffix: dataToUpdate.titleSuffix,
         description: dataToUpdate.description,
       })
-    });
+    }, true);
     return mapDbToAboutData(result);
   },
 
@@ -301,7 +320,7 @@ export const contentApi = {
         whatsapp_number: dataToUpdate.whatsappNumber,
         whatsapp_link_label: dataToUpdate.whatsappLinkLabel,
       })
-    });
+    }, true);
     return mapDbToContactInfo(result);
   },
 
@@ -319,7 +338,7 @@ export const contentApi = {
         navigation_columns: dataToUpdate.navigationColumns,
         copyright_text: dataToUpdate.copyrightText,
       })
-    });
+    }, true);
     return mapDbToFooterConfig(result);
   },
 
@@ -338,7 +357,7 @@ export const contentApi = {
         icon: solution.icon,
         display_order: solution.displayOrder,
       }])
-    });
+    }, true);
     return mapDbToFinancialSolution(result);
   },
 
@@ -353,11 +372,11 @@ export const contentApi = {
         display_order: solution.displayOrder,
         is_active: solution.isActive,
       })
-    });
+    }, true);
     return mapDbToFinancialSolution(result);
   },
 
   async deleteFinancialSolution(id: number): Promise<void> {
-    await fetchApi(`/api/database/records/financial_solutions?id=eq.${id}`, { method: 'DELETE' });
+    await fetchApi(`/api/database/records/financial_solutions?id=eq.${id}`, { method: 'DELETE' }, true);
   },
 };
