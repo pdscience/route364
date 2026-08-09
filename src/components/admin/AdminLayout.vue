@@ -56,8 +56,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { LayoutDashboard, BookOpen, Users, LogOut, Home, Info, MessageSquare } from 'lucide-vue-next';
+import { useAuth } from '../../composables/useAuth';
 
 const router = useRouter();
+const { signOut } = useAuth();
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
@@ -67,8 +69,8 @@ const navItems = [
   { icon: MessageSquare, label: 'Contato', path: '/admin/contact' },
 ];
 
-const handleLogout = () => {
-  sessionStorage.removeItem('admin_authenticated');
+const handleLogout = async () => {
+  await signOut();
   router.push('/');
 };
 </script>
