@@ -58,9 +58,10 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Lock, AlertCircle } from 'lucide-vue-next';
-import { ADMIN_EMAIL, ADMIN_PASSWORD } from '../../constants';
+import { useAuth } from '../../composables/useAuth';
 
 const router = useRouter();
+const { signIn } = useAuth();
 
 const email = ref('');
 const password = ref('');
@@ -70,16 +71,13 @@ const isLoading = ref(false);
 const handleLogin = async () => {
   error.value = '';
   isLoading.value = true;
-
-  await new Promise(resolve => setTimeout(resolve, 500));
-
-  if (email.value === ADMIN_EMAIL && password.value === ADMIN_PASSWORD) {
-    sessionStorage.setItem('admin_authenticated', 'true');
+  try {
+    await signIn(email.value, password.value);
     router.push('/admin/dashboard');
-  } else {
-    error.value = 'E-mail ou senha incorretos.';
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : 'E-mail ou senha incorretos.';
+  } finally {
+    isLoading.value = false;
   }
-  
-  isLoading.value = false;
 };
 </script>
