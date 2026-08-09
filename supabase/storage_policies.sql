@@ -10,6 +10,13 @@
 -- After creating the buckets, run this SQL to add the policies
 -- ============================================
 
+-- Enable RLS on storage.objects (required for the policies to take effect)
+ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
+
+-- Drop anonymous upload policies (security hole — allowed any anon to upload)
+DROP POLICY IF EXISTS "Allow anon uploads to courses bucket" ON storage.objects;
+DROP POLICY IF EXISTS "Allow anon uploads to testimonials bucket" ON storage.objects;
+
 -- Storage policies for courses bucket
 DROP POLICY IF EXISTS "Public read access to courses bucket" ON storage.objects;
 CREATE POLICY "Public read access to courses bucket" ON storage.objects

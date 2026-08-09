@@ -245,8 +245,13 @@ DROP TRIGGER IF EXISTS update_financial_solutions_updated_at ON financial_soluti
 CREATE TRIGGER update_financial_solutions_updated_at BEFORE UPDATE ON financial_solutions
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Revoke write privileges from anon on content tables
+-- Revoke write privileges from PUBLIC and anon on content tables.
+-- authenticated mantem seus grants para que o JWT do admin passe pelas policies abaixo.
+REVOKE INSERT, UPDATE, DELETE ON courses, testimonials, features, about_data, contact_info, footer_config, financial_solutions FROM PUBLIC;
 REVOKE INSERT, UPDATE, DELETE ON courses, testimonials, features, about_data, contact_info, footer_config, financial_solutions FROM anon;
+
+-- Grant read access for public reads
+GRANT SELECT ON courses, testimonials, features, about_data, contact_info, footer_config, financial_solutions TO anon, authenticated;
 
 -- Create RLS Policies (allow public read, admin-only write via auth.email())
 -- Writes are restricted to the admin email: portoinforsistem@gmail.com
