@@ -15,35 +15,35 @@ DROP POLICY IF EXISTS "Public read access to courses bucket" ON storage.objects;
 CREATE POLICY "Public read access to courses bucket" ON storage.objects
 FOR SELECT USING (bucket = 'courses');
 
-DROP POLICY IF EXISTS "Allow authenticated uploads to courses bucket" ON storage.objects;
-CREATE POLICY "Allow authenticated uploads to courses bucket" ON storage.objects
-FOR INSERT WITH CHECK (bucket = 'courses');
+DROP POLICY IF EXISTS "Allow admin uploads to courses bucket" ON storage.objects;
+CREATE POLICY "Allow admin uploads to courses bucket" ON storage.objects
+FOR INSERT WITH CHECK (bucket = 'courses' AND auth.email() = 'portoinforsistem@gmail.com');
 
-DROP POLICY IF EXISTS "Allow authenticated updates to courses bucket" ON storage.objects;
-CREATE POLICY "Allow authenticated updates to courses bucket" ON storage.objects
-FOR UPDATE USING (bucket = 'courses');
+DROP POLICY IF EXISTS "Allow admin updates to courses bucket" ON storage.objects;
+CREATE POLICY "Allow admin updates to courses bucket" ON storage.objects
+FOR UPDATE USING (bucket = 'courses' AND auth.email() = 'portoinforsistem@gmail.com');
 
-DROP POLICY IF EXISTS "Allow authenticated deletes to courses bucket" ON storage.objects;
-CREATE POLICY "Allow authenticated deletes to courses bucket" ON storage.objects
-FOR DELETE USING (bucket = 'courses');
+DROP POLICY IF EXISTS "Allow admin deletes to courses bucket" ON storage.objects;
+CREATE POLICY "Allow admin deletes to courses bucket" ON storage.objects
+FOR DELETE USING (bucket = 'courses' AND auth.email() = 'portoinforsistem@gmail.com');
 
 -- Storage policies for testimonials bucket
 DROP POLICY IF EXISTS "Public read access to testimonials bucket" ON storage.objects;
 CREATE POLICY "Public read access to testimonials bucket" ON storage.objects
 FOR SELECT USING (bucket = 'testimonials');
 
-DROP POLICY IF EXISTS "Allow authenticated uploads to testimonials bucket" ON storage.objects;
-CREATE POLICY "Allow authenticated uploads to testimonials bucket" ON storage.objects
-FOR INSERT WITH CHECK (bucket = 'testimonials');
+DROP POLICY IF EXISTS "Allow admin uploads to testimonials bucket" ON storage.objects;
+CREATE POLICY "Allow admin uploads to testimonials bucket" ON storage.objects
+FOR INSERT WITH CHECK (bucket = 'testimonials' AND auth.email() = 'portoinforsistem@gmail.com');
 
-DROP POLICY IF EXISTS "Allow authenticated updates to testimonials bucket" ON storage.objects;
-CREATE POLICY "Allow authenticated updates to testimonials bucket" ON storage.objects
-FOR UPDATE USING (bucket = 'testimonials');
+DROP POLICY IF EXISTS "Allow admin updates to testimonials bucket" ON storage.objects;
+CREATE POLICY "Allow admin updates to testimonials bucket" ON storage.objects
+FOR UPDATE USING (bucket = 'testimonials' AND auth.email() = 'portoinforsistem@gmail.com');
 
-DROP POLICY IF EXISTS "Allow authenticated deletes to testimonials bucket" ON storage.objects;
-CREATE POLICY "Allow authenticated deletes to testimonials bucket" ON storage.objects
-FOR DELETE USING (bucket = 'testimonials');
+DROP POLICY IF EXISTS "Allow admin deletes to testimonials bucket" ON storage.objects;
+CREATE POLICY "Allow admin deletes to testimonials bucket" ON storage.objects
+FOR DELETE USING (bucket = 'testimonials' AND auth.email() = 'portoinforsistem@gmail.com');
 
--- Grant permissions
+-- Grant permissions (anon gets read only; writes are restricted to the admin via policies)
 GRANT USAGE ON SCHEMA storage TO anon, authenticated;
-GRANT ALL ON storage.objects TO anon, authenticated;
+GRANT SELECT ON storage.objects TO anon, authenticated;

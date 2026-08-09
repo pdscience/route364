@@ -1,5 +1,5 @@
 -- Supabase Schema for Route364 Website Content Management
--- Updated: 2026-03-21
+-- Updated: 2026-08-09
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -245,61 +245,77 @@ DROP TRIGGER IF EXISTS update_financial_solutions_updated_at ON financial_soluti
 CREATE TRIGGER update_financial_solutions_updated_at BEFORE UPDATE ON financial_solutions
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Create RLS Policies (allow public read, authenticated write)
+-- Revoke write privileges from anon on content tables
+REVOKE INSERT, UPDATE, DELETE ON courses, testimonials, features, about_data, contact_info, footer_config, financial_solutions FROM anon;
+
+-- Create RLS Policies (allow public read, admin-only write via auth.email())
+-- Writes are restricted to the admin email: portoinforsistem@gmail.com
 -- For courses
 DROP POLICY IF EXISTS "Allow public read courses" ON courses;
 CREATE POLICY "Allow public read courses" ON courses FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Allow authenticated insert courses" ON courses;
-CREATE POLICY "Allow authenticated insert courses" ON courses FOR INSERT WITH CHECK (auth.role() = 'authenticated');
-DROP POLICY IF EXISTS "Allow authenticated update courses" ON courses;
-CREATE POLICY "Allow authenticated update courses" ON courses FOR UPDATE USING (auth.role() = 'authenticated');
-DROP POLICY IF EXISTS "Allow authenticated delete courses" ON courses;
-CREATE POLICY "Allow authenticated delete courses" ON courses FOR DELETE USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin insert courses" ON courses;
+CREATE POLICY "Allow admin insert courses" ON courses FOR INSERT WITH CHECK (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin update courses" ON courses;
+CREATE POLICY "Allow admin update courses" ON courses FOR UPDATE USING (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin delete courses" ON courses;
+CREATE POLICY "Allow admin delete courses" ON courses FOR DELETE USING (auth.email() = 'portoinforsistem@gmail.com');
 
 -- For testimonials
 DROP POLICY IF EXISTS "Allow public read testimonials" ON testimonials;
 CREATE POLICY "Allow public read testimonials" ON testimonials FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Allow authenticated insert testimonials" ON testimonials;
-CREATE POLICY "Allow authenticated insert testimonials" ON testimonials FOR INSERT WITH CHECK (auth.role() = 'authenticated');
-DROP POLICY IF EXISTS "Allow authenticated update testimonials" ON testimonials;
-CREATE POLICY "Allow authenticated update testimonials" ON testimonials FOR UPDATE USING (auth.role() = 'authenticated');
-DROP POLICY IF EXISTS "Allow authenticated delete testimonials" ON testimonials;
-CREATE POLICY "Allow authenticated delete testimonials" ON testimonials FOR DELETE USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin insert testimonials" ON testimonials;
+CREATE POLICY "Allow admin insert testimonials" ON testimonials FOR INSERT WITH CHECK (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin update testimonials" ON testimonials;
+CREATE POLICY "Allow admin update testimonials" ON testimonials FOR UPDATE USING (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin delete testimonials" ON testimonials;
+CREATE POLICY "Allow admin delete testimonials" ON testimonials FOR DELETE USING (auth.email() = 'portoinforsistem@gmail.com');
 
 -- For features
 DROP POLICY IF EXISTS "Allow public read features" ON features;
 CREATE POLICY "Allow public read features" ON features FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Allow authenticated insert features" ON features;
-CREATE POLICY "Allow authenticated insert features" ON features FOR INSERT WITH CHECK (auth.role() = 'authenticated');
-DROP POLICY IF EXISTS "Allow authenticated update features" ON features;
-CREATE POLICY "Allow authenticated update features" ON features FOR UPDATE USING (auth.role() = 'authenticated');
-DROP POLICY IF EXISTS "Allow authenticated delete features" ON features;
-CREATE POLICY "Allow authenticated delete features" ON features FOR DELETE USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin insert features" ON features;
+CREATE POLICY "Allow admin insert features" ON features FOR INSERT WITH CHECK (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin update features" ON features;
+CREATE POLICY "Allow admin update features" ON features FOR UPDATE USING (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin delete features" ON features;
+CREATE POLICY "Allow admin delete features" ON features FOR DELETE USING (auth.email() = 'portoinforsistem@gmail.com');
 
 -- For about_data
 DROP POLICY IF EXISTS "Allow public read about_data" ON about_data;
 CREATE POLICY "Allow public read about_data" ON about_data FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Allow authenticated update about_data" ON about_data;
-CREATE POLICY "Allow authenticated update about_data" ON about_data FOR UPDATE USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin insert about_data" ON about_data;
+CREATE POLICY "Allow admin insert about_data" ON about_data FOR INSERT WITH CHECK (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin update about_data" ON about_data;
+CREATE POLICY "Allow admin update about_data" ON about_data FOR UPDATE USING (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin delete about_data" ON about_data;
+CREATE POLICY "Allow admin delete about_data" ON about_data FOR DELETE USING (auth.email() = 'portoinforsistem@gmail.com');
 
 -- For contact_info
 DROP POLICY IF EXISTS "Allow public read contact_info" ON contact_info;
 CREATE POLICY "Allow public read contact_info" ON contact_info FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Allow authenticated update contact_info" ON contact_info;
-CREATE POLICY "Allow authenticated update contact_info" ON contact_info FOR UPDATE USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin insert contact_info" ON contact_info;
+CREATE POLICY "Allow admin insert contact_info" ON contact_info FOR INSERT WITH CHECK (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin update contact_info" ON contact_info;
+CREATE POLICY "Allow admin update contact_info" ON contact_info FOR UPDATE USING (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin delete contact_info" ON contact_info;
+CREATE POLICY "Allow admin delete contact_info" ON contact_info FOR DELETE USING (auth.email() = 'portoinforsistem@gmail.com');
 
 -- For footer_config
 DROP POLICY IF EXISTS "Allow public read footer_config" ON footer_config;
 CREATE POLICY "Allow public read footer_config" ON footer_config FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Allow authenticated update footer_config" ON footer_config;
-CREATE POLICY "Allow authenticated update footer_config" ON footer_config FOR UPDATE USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin insert footer_config" ON footer_config;
+CREATE POLICY "Allow admin insert footer_config" ON footer_config FOR INSERT WITH CHECK (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin update footer_config" ON footer_config;
+CREATE POLICY "Allow admin update footer_config" ON footer_config FOR UPDATE USING (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin delete footer_config" ON footer_config;
+CREATE POLICY "Allow admin delete footer_config" ON footer_config FOR DELETE USING (auth.email() = 'portoinforsistem@gmail.com');
 
 -- For financial_solutions
 DROP POLICY IF EXISTS "Allow public read financial_solutions" ON financial_solutions;
 CREATE POLICY "Allow public read financial_solutions" ON financial_solutions FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Allow authenticated insert financial_solutions" ON financial_solutions;
-CREATE POLICY "Allow authenticated insert financial_solutions" ON financial_solutions FOR INSERT WITH CHECK (auth.role() = 'authenticated');
-DROP POLICY IF EXISTS "Allow authenticated update financial_solutions" ON financial_solutions;
-CREATE POLICY "Allow authenticated update financial_solutions" ON financial_solutions FOR UPDATE USING (auth.role() = 'authenticated');
-DROP POLICY IF EXISTS "Allow authenticated delete financial_solutions" ON financial_solutions;
-CREATE POLICY "Allow authenticated delete financial_solutions" ON financial_solutions FOR DELETE USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin insert financial_solutions" ON financial_solutions;
+CREATE POLICY "Allow admin insert financial_solutions" ON financial_solutions FOR INSERT WITH CHECK (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin update financial_solutions" ON financial_solutions;
+CREATE POLICY "Allow admin update financial_solutions" ON financial_solutions FOR UPDATE USING (auth.email() = 'portoinforsistem@gmail.com');
+DROP POLICY IF EXISTS "Allow admin delete financial_solutions" ON financial_solutions;
+CREATE POLICY "Allow admin delete financial_solutions" ON financial_solutions FOR DELETE USING (auth.email() = 'portoinforsistem@gmail.com');
